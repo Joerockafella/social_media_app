@@ -1,0 +1,43 @@
+SOCIAL NETWORK IN DJANGO - PYLANE
+
+Django installed
+media and static set
+collectstatic done
+po.md = project overview
+posts and profiles apps created
+
+# profiles app
+* Profile Table created 
+Slug Field is used in the Profile table (models.py) in order to auto create a user name.
+In the file: utils.py, there is a fucntion to generate a random number to add to a conflicted username
+Signals.py created
+Imported the Signals file inside the file: app.py 
+Importing the ProfilesConfig in the file: __init--.py
+Then creating a function in the signals file that will automatically create the profile when a user gets created
+
+* Relationship Table created
+We create 3 importants fields
+1. Sender: Who sends the invitation
+2. Receiver: Who receives the invitation
+3. Status: The status of the invitation, is it sent, is it acceted, is it ignored or deleted.
+We wont keep track of the ignored or deleted
+Relationship registered in the admin.py 
+created views.py in bffbook project dir
+views updated to render the home.html file
+
+
+# Main templates file
+home.html, navbar.html and base.html created and updated
+style.css and main.js created and updated
+A function to display all friends list and number of friends done
+Got My profile display all that needs to be displayed.
+created forms.py in profiles app
+A form just been created for Myprofile
+Myprofile page almost fully updated with a modal to update the profile after lesson 5
+
+TODO: Updating my profile with additional statistics such as "How many posts did we like", "How many likes did we give", and "How many likes did we receive".
+
+
+# posts app
+
+
