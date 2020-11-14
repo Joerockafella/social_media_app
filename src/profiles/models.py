@@ -22,9 +22,6 @@ class Profile(models.Model):
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f"{self.user.username}-{self.created.strftime('%d-%m-%Y')}"
-
     # To grab all the friends from the "ManyToManyField"
     def get_friends(self):
         return self.friends.all()
@@ -32,6 +29,40 @@ class Profile(models.Model):
     # To get the number of friends
     def get_friends_no(self):
         return self.friends.all().count()
+
+    # To get the number of posts
+    def get_posts_no(self):
+        return self.posts.all().count()
+
+    # To get all the posts of from the author
+    def get_all_authors_posts(self):
+        return self.posts.all()
+
+    # To get all the given likes we use again the "Resvese Relationship"
+    # because we don't have a related name
+    def get_likes_given_no(self):
+        likes = self.like_set.all()
+        total_liked = 0
+        # Loop through the likes
+        for item in likes:
+            # To check if this item has a value of like
+            if item.value == 'Like':
+                total_liked += 1
+        return total_liked
+
+    def get_likes_received_no(self):
+        # On this field we don't use the "Reverse Relationship" but we use "forward relationship",
+        # because in the models.py of posts app there is a the author field that has a 'related_name="posts"'
+        # then we get all the posts
+        posts = self.posts.all()
+        total_liked = 0
+        for item in posts:
+            # Here we get all the liked posts ref "liked" field in posts.models.py
+            total_liked = item.liked.all().count()
+        return total_liked
+
+    def __str__(self):
+        return f"{self.user.username}-{self.created.strftime('%d-%m-%Y')}"
 
     # To help the slug field create the username
     # Fist to check if the first name and the last name exist
