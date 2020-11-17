@@ -43,3 +43,5 @@ TODO: Updating my profile with additional statistics such as "How many posts did
 Tables created: Post, Comment and Like
 Registered the models in admin.py
 get_likes, get_friends, get_friends_no, get_posts_no et. all done in my profile.
+form for Post created
+Users can now post and comment on a particular post
