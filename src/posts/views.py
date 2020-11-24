@@ -5,9 +5,13 @@ from profiles.models import Profile
 from .forms import PostModelForm, CommentModelForm
 from django.views.generic import UpdateView, DeleteView
 from django.contrib import messages
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 
+@login_required
 def post_comment_create_and_list_view(request):
     qs = Post.objects.all()
     profile = Profile.objects.get(user=request.user)
@@ -51,6 +55,7 @@ def post_comment_create_and_list_view(request):
 # A view to like and unlike posts
 
 
+@login_required
 def like_unlike_post(request):
     # We first request a user that is logged in
     user = request.user
@@ -69,7 +74,7 @@ def like_unlike_post(request):
             # if so, remove this profile in the like of this post
             post_obj.liked.remove(profile)
         else:
-            # if the profile hasn't liked the post we add it to the likes to this post
+            # if the profile hasn't liked the post we add it to the likes of this post
             post_obj.liked.add(profile)
 
         # Then We create the like
@@ -89,10 +94,17 @@ def like_unlike_post(request):
 
             post_obj.save()
             like.save()
+        # Creating a json response for likes and unlikes to prevent page reload
+        data = {
+            'value': like.value,
+            'likes': post_obj.liked.all().count()
+        }
+
+        return JsonResponse(data, safe=False)
     return redirect('posts:main-post-view')
 
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'posts/confirm_del.html'
     success_url = reverse_lazy('posts:main-post-view')
@@ -107,7 +119,7 @@ class PostDeleteView(DeleteView):
         return obj
 
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(LoginRequiredMixin, UpdateView):
     form_class = PostModelForm
     model = Post
     template_name = 'posts/update.html'

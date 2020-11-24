@@ -23,7 +23,6 @@ class Post(models.Model):
     def num_likes(self):
         return self.liked.all().count()
 
-    # TODO: Grab the number of comments here
     # This is a "Reverse Relationship" because we don't have a related name,
     #  so we use it with a "modelName_set" like below
     def num_comments(self):

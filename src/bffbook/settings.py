@@ -38,9 +38,44 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Django all-auth
+    'django.contrib.sites',
+    # Apps
     'posts',
     'profiles',
+    # Django all-auth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 ]
+
+# From Django all-auth
+SITE_ID = 1
+
+# To redirect to admin login when required
+#LOGIN_URL = '/admin'
+
+# To redirect to to posts after login
+LOGIN_REDIRECT_URL = '/posts'
+
+# To enable login with email
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
+# To enable to sign in with email and not username
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_UNIQUE = True
+
+# In order to user verification account you can use
+#ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+
+# Creating a django dummy email to be able to login because we don't have an email server yet
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+
+# Here you need to have a real email backend
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -65,10 +100,24 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # Added from context_processors.py (appName.fileName.functionName)
+                'profiles.context_processors.profile_pic',
+                'profiles.context_processors.invitations_received_no'
             ],
         },
     },
 ]
+
+# From Django all-auth
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+
+]
+
 
 WSGI_APPLICATION = 'bffbook.wsgi.application'
 

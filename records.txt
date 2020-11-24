@@ -45,3 +45,12 @@ Registered the models in admin.py
 get_likes, get_friends, get_friends_no, get_posts_no et. all done in my profile.
 form for Post created
 Users can now post and comment on a particular post
+Post, update and delete, all improved and working
+Working on profile, listview done, send invitation done, interface improved.
+Json integrated in order to like and unlike without reloading the page
+Login required added
+Firends dopdown: urls updated
+Frontend interface improved
+Profile pic added through context_processors
+Invitations number added in friends dropdown through context_processors
+Accounts, login and logout implemented
