@@ -54,3 +54,4 @@ Frontend interface improved
 Profile pic added through context_processors
 Invitations number added in friends dropdown through context_processors
 Accounts, login and logout implemented
+...
